@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Alice&family=Black+Ops+One&family=Lilita+One&family=Nanum+Gothic+Coding&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200&display=swap');
+
+
+
+.container {
+	max-width: 1200px;
+	padding: 20px 0 20px 0;
+	margin-right: auto;
+	margin-left: auto;
+	overflow: scroll;
+}
+
+.timetable {
+	padding: 0;
+	color: black;
+}
+.test {
+		list-style: none;
+		display: grid;
+		grid-template-columns: repeat(6, minmax(180px, 100px));
+		grid-template-rows: repeat(1, 1fr);
+		grid-auto-rows: auto;
+		grid-gap: 1px;
+		grid-auto-flow: column;
+	}
+.timetable>li {
+	display: flex;
+	position: relative;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	list-style-type: none;
+	height: 100%;
+	width: 100%;
+	max-width: 400px;
+	padding: 0.3rem;
+	margin: 1px;
+}
+
+.timetable>li abbr {
+	font-size: 0;
+}
+
+.timetable>li abbr:after {
+	content: attr(title);
+	font-size: 4rem;
+}
+
+.timetable>li:before {
+	font-size: 1rem;
+}
+
+@
+supports (display: grid) { .timetable > li { max-width:100%;
+	
+}
+
+}
+.timetable .day-title {
+	align-items: center;
+	width: 100%;
+	border: 1px solid black;
+}
+.class-days-title{
+	font-family: 'Nanum Gothic Coding', monospace;
+	color: #0a2351;
+}
+.class-title {
+	font-weight:900;
+	font-size:16px;
+	color: #0a2351;
+	font-family: 'Nanum Gothic Coding', monospace;
+}
+
+.class-time {
+	font-family: "Poppins", sans-serif;
+	font-size: 1rem;
+	color: black;
+}
+
+.class-teacher {
+	
+	font-size: 14px;
+	color: black;
+	font-family: 'Noto Serif KR', serif;
+}
+
+.beginner:after {
+	content: "\24B6\FE0E";
+	position: absolute;
+	font-size: 28px;
+	right: 5px;
+}
+
+.medium:after {
+	content: "\24C2\FE0E";
+	position: absolute;
+	font-size: 28px;
+	right: 5px;
+}
+
+.advanced:after {
+	content: "\24BB\FE0E";
+	position: absolute;
+	font-size: 28px;
+	right: 5px;
+}
+
+.timetable .blue {
+	background: #E8E8E8;
+	color: black;
+}
+
+.timetable .blue-light {
+	background: #BBD1E8;
+	color: black;
+}
+
+.timetable .danceclass {
+	box-shadow: 0 0 1x rgba(0, 0, 0, .1);
+}
+
+@media only screen and (min-width: 480px) and (max-width: 1199px) {
+	
+	.timetable {
+		display: grid;
+		grid-template-columns: repeat(6, minmax(180px, 100px));
+		grid-template-rows: repeat(9, 1fr);
+		grid-auto-rows: auto;
+		grid-gap: 1px;
+		grid-auto-flow: column;
+	}
+	.test {
+		list-style: none;
+		display: grid;
+		grid-template-columns: repeat(6, minmax(180px, 100px));
+		grid-template-rows: repeat(1, 1fr);
+		grid-auto-rows: auto;
+		grid-gap: 1px;
+		grid-auto-flow: column;
+	}
+	.day-title {
+		grid-row-end: 2;
+		color: black;
+	}
+	.timetable>li {
+		line-height: 1.15rem;
+	}
+	.timetable>li abbr {
+		font-size: 3rem;
+	}
+	.timetable>li abbr:after {
+		content: attr(title);
+		font-size: 0;
+	}
+	.timetable .danceclass {
+		transition: all 0.35s ease;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+	.timetable .danceclass:hover {
+		transition: all .2s ease-out;
+		-webkit-transform: scale(0.96);
+		transform: scale(0.96);
+		cursor: pointer;
+		font-smoothing: antialiased;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+}
+
+@media only screen and (min-width: 1200px) {
+	.timetable {
+		display: grid;
+		grid-template-columns: repeat(6, minmax(180px, 100px));
+		grid-template-rows: repeat(8, 1fr);
+		grid-auto-rows: auto;
+		grid-gap: 1px;
+		grid-auto-flow: column;
+	}
+	.day-title {
+		grid-row-end: 2;
+		color: black;
+	}
+	.timetable>li {
+		line-height: 1.15rem;
+	}
+	.timetable>li abbr {
+		font-size: 3rem;
+	}
+	.timetable>li abbr:after {
+		content: attr(title);
+		font-size: 0;
+	}
+	.timetable .danceclass {
+		transition: all 0.35s ease;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+	.timetable .danceclass:hover {
+		transition: all .2s ease-out;
+		-webkit-transform: scale(0.96);
+		transform: scale(0.96);
+		cursor: pointer;
+		font-smoothing: antialiased;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+}

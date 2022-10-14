@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<th:block layout:fragment="content">
+	<link rel="stylesheet"
+		href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" />
+	<script
+		src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+	<script
+		src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+	<!-- 상단 내비바 -->
+	<th:block th:replace="fragments/navbar :: navbarFragment"></th:block>
+	<style>
+#layout1 {
+	border: 1px soild #6a7281;
+}
+
+table td p {
+	white-space: pre-line;
+}
+
+table {
+	
+}
+
+pre {
+	word-break: break-all;
+	white-space: pre-line;
+}
+
+table.type09 {
+	border-collapse: collapse;
+	text-align: left;
+	line-height: 1.5;
+}
+
+table.type09 thead th {
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	color: #369;
+	border-bottom: 3px solid #036;
+}
+
+table.type09 tbody th {
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	border-bottom: 1px solid #ccc;
+	background: #f3f6f7;
+}
+
+table.type09 td {
+	padding: 10px;
+	vertical-align: top;
+	border-bottom: 1px solid #ccc;
+}
+</style>
+	<!-- 본문 start -->
+
+	<div class="container-fluid">
+		<div class="row justify-content-center">
+			<div class="card px-2 p-3 me-3 col-8">
+				<div class="card-header p-0 position-relative mt-n4 mb-4 z-index-2">
+					<div
+						class="bg-secondary bg-gradient-secondary shadow-secondary border-radius-lg py-3">
+						<h6 class="text-white ps-3 m-0">과제 제출 확인</h6>
+					</div>
+				</div>
+				<div class="row" style="padding: 15px">
+				<input th:value="${#authentication.principal.username}"
+					type="hidden" id="userId" /> <input
+					th:value="${quiz.classMemberId}" type="hidden" />
+				<table id="layout1" name="layout1" 
+					class="type09">
+					<tbody>
+						<tr>
+							<th class="th-default"><label class="label_default">제출자명</label></td>
+							<td class="td-content"><p th:text="${quiz.userName}"></p></td>
+						</tr>
+						<tr>
+							<th class="th-default"><label class="label_default">과제
+									내용</label></td>
+							<td class="td-content"><p th:text="${quiz.quizRContent}"></p></td>
+						</tr>
+						<tr>
+							<th class="th-default"><label class="label_default">제출
+									날짜</label></td>
+							<td class="td-content"><p
+									th:text="${#dates.format(quiz.quizRDate, 'yyyy-MM-dd')}"></p></td>
+						</tr>
+						<tr>
+							<th class="th-default"><label class="label_default">제출
+									파일</label></td>
+							<td class="td-content"><a
+								th:href="${'/quizAcceptdownload?quizRFile='+quiz.quizRFile}">
+									<p th:text="${quiz.quizROrginal}"></p>
+							</a></td>
+						</tr>
+						<th:block th:if="${quiz.quizRPoint} == 0">
+						<tr>
+							<th class="th-default"><label class="label_default">점수</label></td>
+							<form action="quizdetailview" method="post">
+								<input type="hidden" th:value="${quiz.quizRId}"
+									th:name="quizRId">
+								<td class="td-content"><input type="number"
+									th:name="quizRPoint" />
+									<button class="btn bg-gradient-secondary"
+										style="margin-bottom: 0px;">제출</button></td>
+							</form>
+						</tr>
+						</th:block>
+						<th:block th:unless="${quiz.quizRPoint} == 0">
+							<tr>
+							<th class="th-default"><label class="label_default">점수</label></td>
+								<input type="hidden" th:value="${quiz.quizRId}"
+									th:name="quizRId">
+								<td class="td-content"><input type="number"
+									th:name="quizRPoint" th:value="${quiz.quizRPoint}" readonly="readonly"/></td>
+						</tr>
+						</th:block>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+</th:block>
+</html>

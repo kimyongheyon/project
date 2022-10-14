@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<th:block layout:fragment="content">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css"/>  
+  <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+  <!-- 상단 내비바 -->
+  <th:block th:replace="fragments/navbar :: navbarFragment"></th:block>
+  <!-- 본문 start -->
+  <!-- Button trigger modal -->
+  <style>
+      	.flex {
+  	    display: flex;
+    	flex-direction: row;
+    	justify-content: flex-start;
+    	align-items: center;
+  	}
+  	.left {
+  		width: fit-content;
+    	float: left;
+    	margin-right: 10px;
+  	}
+  	.down {
+  		margin-bottom: 0px;
+  	}
+.pagination .active .page-link {
+	background-color: #7b809a;
+	border-color: #7b809a;
+}
+   /* Start 상단검색창 */
+#noticeTable_filter input {
+      border: 1px solid #d2d6da;
+    }
+
+table.type09 {
+  border-collapse: collapse;
+  text-align: left;
+  line-height: 1.5;
+
+}
+table.type09 thead th {
+  padding: 10px;
+  font-weight: bold;
+  vertical-align: top;
+  color: #369;
+  border-bottom: 3px solid #036;
+  
+}
+table.type09 tbody th {
+  width: 150px;
+  padding: 10px;
+  font-weight: bold;
+  vertical-align: top;
+  border-bottom: 1px solid #ccc;
+  background: #f3f6f7;
+}
+table.type09 td {
+  width: 350px;
+  padding: 10px;
+  vertical-align: top;
+  border-bottom: 1px solid #ccc;
+}
+
+
+.page-link:focus {
+	box-shadow: 0 0 0 0.2rem rgb(123 128 154/ 25%);
+}
+
+  </style>
+<div class="container-fluid py-4">
+           <div class="row justify-content-center">
+      <div class="card p-3 me-3 col-8">
+      
+        <!-- 각 페이지 타이틀바 -->
+        <div class="card-header p-0 position-relative mt-n4 mb-4 z-index-2">
+          <div class="bg-secondary bg-gradient-secondary shadow-secondary border-radius-lg py-3">
+            <h6 class="text-white ps-3 m-0">과제 게시판</h6>
+          </div>
+        </div>
+    
+       <form name="searchform" autocomplete="off">
+   <input th:value="${#authentication.principal.username}" type="hidden" id="userid">
+      <div class="col-md-6 flex">
+      <div class="input-group input-group-outline my-3 left" sec:authorize="hasRole('ROLE_STU')">
+     <select class="form-control" name="classId">
+			<option>강좌 선택</option>
+		<th:block th:each="c : ${classId}">
+			<option th:text="${c.courseTitle}" th:value="${c.classId}"></option>
+		</th:block> 		
+	</select>
+	</div>
+	<div class="input-group input-group-outline my-3 left" sec:authorize="hasRole('ROLE_PROF')">
+ 	<select class="form-control" name="classId">
+			<option>강좌 선택</option>
+		<th:block th:each="c : ${profClassId}">
+			<option th:text="${c.courseTitle}" th:value="${c.classId}"></option>
+		</th:block> 		
+	</select>
+	</div>
+		<button type="submit" class="btn bg-gradient-secondary down" th:value="검색">검색</button>
+	</div>
+	</form>
+    
+ <table id="quizTable" class="table table-striped table-hover type09" style="width: 100%;">
+        <thead>
+            <tr>
+            	<th style="width: 500px">제목</th>
+            	<th>제출시작일</th>
+            	<th>제출종료일</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<input  th:value="${#authentication.principal.username}" type="hidden" id="userid">
+        	<tr th:each="data : ${quizlist}">
+        		<td>
+        		<a th:text="${data.quiz_h_title}" th:href="@{/quizaccept(quizHSeq=${data.quiz_h_seq})}"></a>
+        		</td> 
+        		<td th:text="${data.quiz_d_openday}"></td>
+        		<td th:text="${data.quiz_d_closeday}"></td>
+        	</tr>
+        </tbody>
+  <!-- 본문 end-->
+</table>
+ </div>
+ </div>
+ </div>
+ <script>
+ 	$('#quizTable').DataTable({
+		info : false,
+		"language" : {
+			"lengthMenu" : "페이지 당: _MENU_",
+			"search" : "검색:",
+			"searchPlaceholder" : "키워드를 입력하세요",
+			"zeroRecords" : "검색결과가 없습니다",
+			"info" : "_START_ - _END_ (전체: _MAX_건)",
+			"infoFiltered" : "(검색결과: _TOTAL_건)",
+			"infoEmpty" : "",
+			"paginate" : {
+				"previous" : "<",
+				"next": ">",
+			}
+		}
+ 	});
+ </script>
+</th:block>
+</html>

@@ -1,0 +1,207 @@
+<!--작성자: 김용현
+	페이지 역활: 학생 출석체크 하는 페이지
+	업데이트 날짜: 2022-09-26//-->
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<th:block layout:fragment="content">
+	<!-- 토스터 -->
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
+		integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+		integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<style>
+.pagination .active .page-link {
+	background-color: #7b809a;
+	border-color: #7b809a;
+}
+
+.page-link:focus {
+	box-shadow: 0 0 0 0.2rem rgb(123 128 154/ 25%);
+}
+</style>
+
+
+
+	<!-- 상단 내비바 -->
+	<th:block th:replace="fragments/navbar :: navbarFragment"></th:block>
+	<!-- 본문 start -->
+
+	<div class="container-fluid">
+		<div class="row justify-content-center">
+			<div class="card p-3 me-3 mt-5 col-10" >
+
+				<!-- 각 페이지 타이틀바 -->
+				<div class="card-header p-0 position-relative mt-n4 mb-4 z-index-2">
+					<div
+						class="bg-secondary bg-gradient-secondary shadow-secondary border-radius-lg py-3">
+						<h6 class="text-white ps-3 m-0">출석체크</h6>
+						<input th:value="${classId}" class="classId" type="hidden"
+							id="classId" />
+					</div>
+				</div>
+
+				<table id="attendanceTable" class="table align-items-center mb-0">
+					<thead>
+						<tr>
+							<th
+								class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">학생이름</th>
+							<th
+								class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">학번</th>
+							<th
+								class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">전공</th>
+							<th
+								class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">성별</th>
+							<th
+								class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">출석</th>
+							<th
+								class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">결석</th>
+							<th
+								class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">지각</th>
+
+						</tr>
+					</thead>
+					<tbody >
+						<tr th:each="list,idx:${list}">
+							<td th:text="${list.user_name}"></td>
+							<td th:text="${list.stu_id}" th:data-stu_id="${list.stu_id}"
+								class="test"></td>
+							<td th:text="${list.user_dept}"></td>
+							<th:block th:if="${list.user_sex} == 'M'">
+							<td th:text="남성"></td>
+							</th:block>
+							<th:block th:if="${list.user_sex} == 'F'">
+							<td th:text="여성"></td>
+							</th:block>
+							<td><input type="radio" th:name="|attendance${idx.index}|"
+								th:value="1" checked /></td>
+							<td><input type="radio" th:name="|attendance${idx.index}|"
+								th:value="2" /></td>
+							<td><input type="radio" th:name="|attendance${idx.index}|"
+								th:value="3" /></td>
+
+						</tr>
+					</tbody>
+					<!-- 본문 end-->
+				</table>
+				<div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+					<button id="attendanceInsert" th:text="입력"
+						class="btn btn btn-secondary me-md-2"></button>
+					<button class="btn btn btn-secondary me-md-2 movebtn" th:text="돌아가기" id="backBtn"></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" th:inline="javascript">
+	
+		$('#attendanceTable').DataTable({
+			  language: {
+		            lengthMenu: "페이지 당: _MENU_",
+		            search: "검색:",
+		            searchPlaceholder: "키워드를 입력하세요",
+		            zeroRecords: "검색결과가 없습니다",
+		            info: "_START_ - _END_ (전체: _MAX_건)",
+		            infoFiltered: "(검색결과: _TOTAL_건)",
+		            infoEmpty: "",
+		            paginate: {
+		              previous: "<",
+		              next: ">",
+		            }
+		          }
+		});
+		
+		var attnDate = [];
+		[# th:each="time : ${selectTime}"]
+		 attnDate.push([[${time.attnDate}]].substring(0,10))
+	   [/];	
+		//오늘 날짜를 생성하는 부분
+		var today = new Date();
+		var year = today.getFullYear();
+		var month = ('0' + (today.getMonth() + 1)).slice(-2);
+		var day = ('0' + today.getDate()).slice(-2);
+
+		var dateString = year + '-' + month  + '-' + day;
+	
+		
+		var timeCk=false;
+		//출석체크한 데이터를 반복문을 이용하여 오늘 날짜와 같은 날이 있는지 체크하는 부분이다. 만약 오늘 날짜와 같으면 true를 반환하여 출석체크를 못하게 하였다
+	attnDate.forEach(time=>{
+
+		if(dateString.indexOf(time) == 0){
+			timeCk=true;
+		}
+	})	
+		
+
+		
+		$("#attendanceInsert").on("click",attendanceInsert)
+		
+		function attendanceInsert(){
+	
+		
+		if(timeCk == false ){
+			
+			
+		var classId = $("#classId").val();
+		var classList = [[${list}]];
+		var attnId = ""
+		let attnType =[];
+		var stuId= [];
+		
+		
+		//출석체크한 값을 json형식으로 만들어 insert하는 부분이다.
+		for(var i=0; i<classList.length; i++){
+		 attnId="attendance" + i;
+			$("input[name= "+attnId+"]:checked").each(function(){
+				attnType.push($(this).val());
+			})
+		}
+			
+			[# th:each="list : ${list}"]
+			 stuId.push([[${list.stu_id}]])
+		   [/];	
+			
+			
+			var attendanceList = new Array();
+			for(var i=0; i<classList.length; i++){
+				var data = new Object();
+				data.classId = classId;
+				data.stuId= stuId[i];
+				data.attnType = attnType[i];
+				
+				attendanceList.push(data);
+			}
+			var jsonData = JSON.stringify(attendanceList);
+		
+		$.ajax({
+			url:"/attendanceInsert",
+			data:jsonData,
+			type:"post",
+			dataType: "json",
+			contentType: 'application/json; charset=UTF-8',
+			success:function(data){
+				
+				toastr.success('출석완료');
+				setTimeout("location.href='/attendanceSelect'",1000);
+			}
+		})
+		}
+		else if(timeCk == true){
+			alert("이미 출석 체크를 완료 하셨습니다.")
+		}
+		}
+		
+		$("#backBtn").on("click",function(){
+			window.history.back();
+		})
+	</script>
+</th:block>
+</html>
