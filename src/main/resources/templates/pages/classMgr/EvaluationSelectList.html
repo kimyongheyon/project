@@ -3,22 +3,20 @@
 	업데이트 날짜: 2022-09-26//-->
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/layout}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout}">
 <th:block layout:fragment="content">
 
 	<style>
-.pagination .active .page-link {
-	background-color: #7b809a;
-	border-color: #7b809a;
-}
+		.pagination .active .page-link {
+			background-color: #7b809a;
+			border-color: #7b809a;
+		}
 
-.page-link:focus {
-	box-shadow: 0 0 0 0.2rem rgb(123 128 154/ 25%);
-}
-</style>
+		.page-link:focus {
+			box-shadow: 0 0 0 0.2rem rgb(123 128 154/ 25%);
+		}
+	</style>
 
 
 
@@ -32,25 +30,19 @@
 
 				<!-- 각 페이지 타이틀바 -->
 				<div class="card-header p-0 position-relative mt-n4 mb-4 z-index-2">
-					<div
-						class="bg-secondary bg-gradient-secondary shadow-secondary border-radius-lg py-3">
+					<div class="bg-secondary bg-gradient-secondary shadow-secondary border-radius-lg py-3">
 						<h6 class="text-white ps-3 m-0">교직원 평가 목록</h6>
-						<input th:value="${#authentication.principal.username}"
-							type="hidden" id="userid">
+						<input th:value="${#authentication.principal.username}" type="hidden" id="userid">
 					</div>
 				</div>
 
 				<table id="evaluationTable" class="table align-items-center mb-0 table-hover">
 					<thead>
 						<tr>
-							<th
-								class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">교과목</th>
-							<th
-								class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">교수</th>
-							<th
-								class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">평가항목</th>
-							<th
-								class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
+							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">교과목</th>
+							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">교수</th>
+							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">평가항목</th>
+							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -59,7 +51,7 @@
 							<td th:text="${data.user_name}"></td>
 							<td th:text="|${data.course_title} 수업 ${data.user_name}님 교직원 평가|"></td>
 							<td><a class="btn btn btn-secondary btn-sm" th:text="평가하기"
-								th:href="@{/evaluationquestion/{classId}(classId=${data.class_id})}"></a>
+									th:href="@{/evaluationquestion/{classId}(classId=${data.class_id})}"></a>
 							</td>
 						</tr>
 
@@ -71,21 +63,22 @@
 	</div>
 	<script>
 		$('#evaluationTable').DataTable({
-			language : {
-				lengthMenu : "페이지 당: _MENU_",
-				search : "검색:",
-				searchPlaceholder : "키워드를 입력하세요",
-				zeroRecords : "검색결과가 없습니다",
-				info : "_START_ - _END_ (전체: _MAX_건)",
-				infoFiltered : "(검색결과: _TOTAL_건)",
-				infoEmpty : "",
-				paginate : {
-					previous : "<",
-          next: ">",
+			language: {
+				lengthMenu: "페이지 당: _MENU_",
+				search: "검색:",
+				searchPlaceholder: "키워드를 입력하세요",
+				zeroRecords: "검색결과가 없습니다",
+				info: "_START_ - _END_ (전체: _MAX_건)",
+				infoFiltered: "(검색결과: _TOTAL_건)",
+				infoEmpty: "",
+				paginate: {
+					previous: "<",
+					next: ">",
 				}
 			}
 
 		});
 	</script>
 </th:block>
+
 </html>

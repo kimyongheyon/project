@@ -4,15 +4,17 @@
 
 	<select id="selectschedule" resultType="com.kcy.lecture.service.ClassScheduleVO">
 		
-		SELECT class_timetable_id,class_timetable_name,class_timetable_start,class_timetable_end  FROM k_class_timetable 
-		WHERE class_timetable_days = #{classTimetableDays}
+		SELECT class_timetable_id,class_timetable_name,class_timetable_start,class_timetable_end  
+		 FROM k_class_timetable 
+		 WHERE class_timetable_days = #{classTimetableDays}
 	
 	</select>
 	
 		<select id="getScheduleDays" resultType="com.kcy.lecture.service.ClassScheduleVO">
 		SELECT DISTINCT kct.class_timetable_days,kcst.schedule_title  
-		FROM k_class_timetable as kct join k_class_schedule_t kcst on kct.class_timetable_days = kcst.class_timetable_days
-		order by 1
+		 FROM k_class_timetable as kct 
+		 join k_class_schedule_t kcst on kct.class_timetable_days = kcst.class_timetable_days
+		 order by 1
 			
 		</select>
 		
@@ -51,13 +53,14 @@
 		</select>
 			
 			<select id="classScheduleCk" resultType="com.kcy.lecture.service.ClassScheduleVO">
-				SELECT *  FROM k_class_timetable
+				SELECT *  
+				 FROM k_class_timetable
 			</select>
 		
 
 	<update id="lectureCheck">
 		UPDATE k_class_reg
-			 SET class_yn = 't'
+			SET class_yn = 't'
 			WHERE class_id = #{classId}
 	
 	</update>
@@ -65,10 +68,10 @@
 	<select id="classFindSchedule" resultType="com.kcy.lecture.service.ClassScheduleVO">
 	
 				SELECT t.schedule_title, kct.class_timetable_name,kct.class_timetable_id,kct2.class_id,t.class_timetable_days 
-				from k_class_time kct2 
-				join k_class_timetable kct on kct2.class_timetable_id  = kct.class_timetable_id 
-				join k_class_schedule_t t on kct.class_timetable_days  = t.class_timetable_days 
-				order by class_id,class_timetable_id
+				 from k_class_time kct2 
+				  join k_class_timetable kct on kct2.class_timetable_id  = kct.class_timetable_id 
+				  join k_class_schedule_t t on kct.class_timetable_days  = t.class_timetable_days 
+				  order by class_id,class_timetable_id
 	
 	</select>
 

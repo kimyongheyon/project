@@ -2,22 +2,19 @@
 	페이지 역활: 교직원 평가 결과를 조회하는 페이지
 	업데이트 날짜: 2022-09-26//-->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/layout}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout}">
 <th:block layout:fragment="content">
 	<style>
-.chartbox {
-	width: 900px;
-	margin: auto;
-	margin-top: 50px;
-}
-</style>
+		.chartbox {
+			width: 900px;
+			margin: auto;
+			margin-top: 50px;
+		}
+	</style>
 
 
-	<script type="text/javascript"
-		src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<!-- 상단 내비바 -->
 	<th:block th:replace="fragments/navbar :: navbarFragment"></th:block>
 	<!-- 본문 start -->
@@ -26,11 +23,9 @@
 		<div class="row justify-content-center">
 			<div class="card p-3 me-3 col-8 mt-3">
 				<div class="card-header p-0 position-relative mt-n4 mb-4 z-index-2">
-					<div
-						class="bg-secondary bg-gradient-secondary shadow-secondary border-radius-lg py-3">
+					<div class="bg-secondary bg-gradient-secondary shadow-secondary border-radius-lg py-3">
 						<h6 class="text-white ps-3 m-0">교직원 평가 결과</h6>
-						<input th:value="${#authentication.principal.username}"
-							type="hidden" id="userid">
+						<input th:value="${#authentication.principal.username}" type="hidden" id="userid">
 					</div>
 
 					<div class="chartbox">
@@ -48,74 +43,74 @@
 					</div>
 
 				</div>
-				<button class="btn btn btn-secondary me-md-2 movebtn" th:text="돌아가기"
-					id="backBtn"></button>
+				<button class="btn btn btn-secondary me-md-2 movebtn" th:text="돌아가기" id="backBtn"></button>
 			</div>
 		</div>
 	</div>
 	<script type="text/javascript">
 		google.charts.load('current', {
-			'packages' : [ 'bar' ]
+			'packages': ['bar']
 		});
 		google.charts.setOnLoadCallback(drawChart);
 
 		function drawChart() {
 			let classId = $("#classId").val();
 			$
-					.ajax({
-						url : "/evaluationconfirmationjson",
-						dataType : "json",
-						data : {
-							classId : classId
-						},
-						success : function(result) {
+				.ajax({
+					url: "/evaluationconfirmationjson",
+					dataType: "json",
+					data: {
+						classId: classId
+					},
+					success: function (result) {
 
-							let ck = result['prof_r_result'];
-							let name = [ 'EV1000', 'EV1001', 'EV1002',
-									'EV1003', 'EV1004', 'EV1005', 'EV1006' ];
-							let chartVal = [];
-							chartVal.push([ '교직원평가 결과 통계표', '매우좋음', '좋음', '보통이다',
-									'별로다', '매우별로다', {
-										role : 'annotation'
-									} ]);
-							//문항 수에 맞게 문항 id를 push하는 부분
-							for (var i = 0; i < 7; i++) {
-								let val = [ (i + 1) + '문항' ];
-								for (var j = 0; j < 5; j++) {
-									val.push(ck[name[i]][j].cnt)
-								}
-								val.push('')
-								chartVal.push(val)
+						let ck = result['prof_r_result'];
+						let name = ['EV1000', 'EV1001', 'EV1002',
+							'EV1003', 'EV1004', 'EV1005', 'EV1006'];
+						let chartVal = [];
+						chartVal.push(['교직원평가 결과 통계표', '매우좋음', '좋음', '보통이다',
+							'별로다', '매우별로다', {
+								role: 'annotation'
+							}]);
+						//문항 수에 맞게 문항 id를 push하는 부분
+						for (var i = 0; i < 7; i++) {
+							let val = [(i + 1) + '문항'];
+							for (var j = 0; j < 5; j++) {
+								val.push(ck[name[i]][j].cnt)
 							}
-
-							var data = google.visualization
-									.arrayToDataTable(chartVal);
-
-							var options = {
-								width : 800,
-								height : 400,
-								legend : {
-									position : 'top',
-									maxLines : 3
-								},
-								bar : {
-									groupWidth : '75%'
-								},
-								isStacked : true,
-							};
-							var chart = new google.charts.Bar(document
-									.getElementById('columnchart_material'));
-
-							chart.draw(data, google.charts.Bar
-									.convertOptions(options));
-
+							val.push('')
+							chartVal.push(val)
 						}
-					})
+
+						var data = google.visualization
+							.arrayToDataTable(chartVal);
+
+						var options = {
+							width: 800,
+							height: 400,
+							legend: {
+								position: 'top',
+								maxLines: 3
+							},
+							bar: {
+								groupWidth: '75%'
+							},
+							isStacked: true,
+						};
+						var chart = new google.charts.Bar(document
+							.getElementById('columnchart_material'));
+
+						chart.draw(data, google.charts.Bar
+							.convertOptions(options));
+
+					}
+				})
 		}
 
-		$("#backBtn").on("click", function() {
+		$("#backBtn").on("click", function () {
 			window.history.back();
 		})
 	</script>
 </th:block>
+
 </html>

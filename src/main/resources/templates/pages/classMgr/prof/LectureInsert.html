@@ -2,29 +2,26 @@
 	페이지 역활: 강좌개설 신청하는 페이지
 	업데이트 날짜: 2022-09-26//-->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/layout}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout}">
 
 <th:block layout:fragment="content">
 	<style>
-.flex {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
-	align-items: center;
-	flex-wrap: nowrap;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-}
+		.flex {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-around;
+			align-items: center;
+			flex-wrap: nowrap;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+		}
 
-.test {
-	display: flex;
-	justify-content: flex-start;
-}
-
-</style>
+		.test {
+			display: flex;
+			justify-content: flex-start;
+		}
+	</style>
 
 
 	<!-- 상단 내비바 -->
@@ -36,13 +33,11 @@
 			<div class="card p-3 mt-6 me-3 col-8">
 				<!-- 각 페이지 타이틀바 -->
 				<div class="card-header p-0 position-relative mt-n4 mb-2 z-index-2">
-					<div
-						class="bg-secondary bg-gradient-secondary shadow-secondary border-radius-lg py-3">
+					<div class="bg-secondary bg-gradient-secondary shadow-secondary border-radius-lg py-3">
 						<h6 class="text-white ps-3 m-0">강좌개설 신청</h6>
 					</div>
 				</div>
-				<form action="lectureinsert" method="post"
-					enctype="multipart/form-data">
+				<form action="lectureinsert" method="post" enctype="multipart/form-data">
 					<div class="test col-8 ">
 						<div style="margin-right: 10px; width: 200px">
 							<select class="form-select" name="courseId" id="courseId">
@@ -63,21 +58,20 @@
 					</div>
 
 					<div class="input-group input-group-outline my-3">
-						<label class="form-label" th:text="제목"></label> <input type="text"
-							class="form-control" name="classTitle">
+						<label class="form-label" th:text="제목"></label> <input type="text" class="form-control"
+							name="classTitle">
 					</div>
 
-					
+
 
 					<div class="input-group input-group-outline my-3">
 						<input class="form-control" type="file" multiple="multiple" name="classFileSyl">
-					 <input type="hidden"
-							class="form-control" multiple="multiple" name="classSylOriginal">
+						<input type="hidden" class="form-control" multiple="multiple" name="classSylOriginal">
 					</div>
 
 					<div class="input-group input-group-outline my-3">
-						<label class="form-label" th:text="정원"></label> <input
-							type="number" class="form-control" name="classTo">
+						<label class="form-label" th:text="정원"></label> <input type="number" class="form-control"
+							name="classTo">
 					</div>
 
 
@@ -92,30 +86,34 @@
 					<div class="flex">
 						<div class="col-md-2">
 							<div class="input-group input-group-outline my-3">
-								<label for="mid" class="form-label " th:text="중간" ></label> <input
-									type="number" class="form-control" name="gpaStandardMid" id='mid' maxlength="3" oninput="numberMaxLength(this)">
+								<label for="mid" class="form-label " th:text="중간"></label> <input type="number"
+									class="form-control" name="gpaStandardMid" id='mid' maxlength="3"
+									oninput="numberMaxLength(this)">
 							</div>
 						</div>
 						<div class="col-md-2">
 							<div class="input-group input-group-outline my-3">
-								<label for="final" class="form-label" th:text="기말" ></label> <input
-									type="number" class="form-control" name="gpaStandardFinal" id='final' maxlength="3" oninput="numberMaxLength(this)">
+								<label for="final" class="form-label" th:text="기말"></label> <input type="number"
+									class="form-control" name="gpaStandardFinal" id='final' maxlength="3"
+									oninput="numberMaxLength(this)">
 							</div>
 						</div>
 						<div class="col-md-2">
 							<div class="input-group input-group-outline my-3">
-								<label for="quiz" class="form-label" th:text="과제" ></label> <input
-									type="number" class="form-control" name="gpaStandardQuiz" id="quiz" maxlength="3" oninput="numberMaxLength(this)">
+								<label for="quiz" class="form-label" th:text="과제"></label> <input type="number"
+									class="form-control" name="gpaStandardQuiz" id="quiz" maxlength="3"
+									oninput="numberMaxLength(this)">
 							</div>
 						</div>
 						<div class="col-md-2">
 							<div class="input-group input-group-outline my-3">
-								<label for="attn" class="form-label" th:text="출석" ></label> <input
-									type="number" class="form-control" name="gpaStandardAttn" id='attn' maxlength="3" oninput="numberMaxLength(this)">
+								<label for="attn" class="form-label" th:text="출석"></label> <input type="number"
+									class="form-control" name="gpaStandardAttn" id='attn' maxlength="3"
+									oninput="numberMaxLength(this)">
 							</div>
 						</div>
 					</div>
-					
+
 					<br>
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 						<button class="btn btn-secondary me-md-2" id='insertBtn'>신청하기</button>
@@ -127,33 +125,34 @@
 	<!-- 본문 end-->
 
 	</script>
-		<script type="text/javascript">
-		$("#insertBtn").on("click",function(){
+	<script type="text/javascript">
+		$("#insertBtn").on("click", function () {
 			var mid = $("#mid").val();
 			var finalVal = $("#final").val();
 			var quiz = $("#quiz").val();
 			var attn = $("#attn").val();
-			
+
 			//성적비율 합계가 100이상 넘지 않게 체크하는 부분
 			var sum = parseInt(mid) + parseInt(finalVal) + parseInt(quiz) + parseInt(attn);
-			if(sum > 100){
-			 alert("성적비율 합계는 100이상이 불가능 합니다")
-			 return false;
+			if (sum > 100) {
+				alert("성적비율 합계는 100이상이 불가능 합니다")
+				return false;
 			}
-			else if(sum != 100){
+			else if (sum != 100) {
 				alert("성적비율 합계를 100에 맞게 입력해주세요")
 				return false;
 			}
 		})
-		 function numberMaxLength(e){
-		        if(e.value.length > e.maxLength){
-		            e.value = e.value.slice(0, e.maxLength);
-		        }
-		        else if(e.value >100){
-		        	alert("100이상 입력은 불가능 합니다")
-		        	return e.value = 0;
-		        }
-		    }
-</script>
+		function numberMaxLength(e) {
+			if (e.value.length > e.maxLength) {
+				e.value = e.value.slice(0, e.maxLength);
+			}
+			else if (e.value > 100) {
+				alert("100이상 입력은 불가능 합니다")
+				return e.value = 0;
+			}
+		}
+	</script>
 </th:block>
+
 </html>

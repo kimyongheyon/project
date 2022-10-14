@@ -72,7 +72,7 @@
 			 from k_class_reg kcr 
 			 join k_users ku on ku.user_id  = kcr.prof_id 
 			 join k_course kc on kcr.course_id = kc.course_id 
-			 order by class_id;
+			 order by class_id
 		</select>
 		
 		<update id="lectureUpdate" parameterType="com.kcy.lecture.service.LectureVO">
@@ -141,13 +141,13 @@
 		<select id="myMajor" resultType="com.kcy.lecture.service.OpenLectureVO">
 		
 			   SELECT user_dept  FROM  k_users 
-    		   WHERE user_id = #{userId};
+    		   WHERE user_id = #{userId}
 		</select>
 		
 		<select id="myGrade" resultType="com.kcy.lecture.service.OpenLectureVO">
 		
 			SELECT student_grade  from k_students ks 
-			WHERE stu_id =#{userId};
+			WHERE stu_id =#{userId}
 		
 		</select>
 	

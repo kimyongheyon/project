@@ -1,49 +1,43 @@
-
 <!--작성자: 김용현
 	페이지 역활: 수강신청을 할 수 있는 페이지
 	업데이트 날짜: 2022-09-26//-->
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/layout}">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout}">
 
 <th:block layout:fragment="content">
 	<style>
-@import url('https://fonts.googleapis.com/css2?family=Alice&family=Black+Ops+One&family=Lilita+One&family=Nanum+Gothic+Coding&display=swap');	
-.input-group.input-group-static .form-control, .input-group.input-group-static .form-control:focus
-	{
-	background-image: linear-gradient(0deg, #4d5665 2px, rgba(156, 39, 176, 0)
-		0), linear-gradient(0deg, #d2d2d2 1px, rgba(209, 209, 209, 0) 0);
-}
+		@import url('https://fonts.googleapis.com/css2?family=Alice&family=Black+Ops+One&family=Lilita+One&family=Nanum+Gothic+Coding&display=swap');
 
-.test {
-	display: flex;
-}
+		.input-group.input-group-static .form-control,
+		.input-group.input-group-static .form-control:focus {
+			background-image: linear-gradient(0deg, #4d5665 2px, rgba(156, 39, 176, 0) 0), linear-gradient(0deg, #d2d2d2 1px, rgba(209, 209, 209, 0) 0);
+		}
 
-.selectBox {
-	display: flex;
-}
+		.test {
+			display: flex;
+		}
 
-.mainTopBox {
-	display: flex;
-	justify-content: space-between;
-	flex-direction: row-reverse;
-}
-.table.align-items-center th {
-    text-align: center;
-}
+		.selectBox {
+			display: flex;
+		}
 
+		.mainTopBox {
+			display: flex;
+			justify-content: space-between;
+			flex-direction: row-reverse;
+		}
 
-</style>
+		.table.align-items-center th {
+			text-align: center;
+		}
+	</style>
 	<!-- 토스터 -->
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
 		integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
 		crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
 		integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<!-- 상단 내비바 -->
@@ -55,8 +49,7 @@
 			<div class="card  me-3 mt-5 col-10">
 				<!-- 각 페이지 타이틀바 -->
 				<div class="card-header p-0 position-relative mt-n4 mb-4 z-index-2">
-					<div
-						class="bg-secondary bg-gradient-secondary shadow-secondary border-radius-lg py-3">
+					<div class="bg-secondary bg-gradient-secondary shadow-secondary border-radius-lg py-3">
 						<h6 class="text-white ps-3 m-0">수강신청</h6>
 					</div>
 				</div>
@@ -65,18 +58,16 @@
 						<form action="openlecturelist">
 							<div class="selectBox">
 								<div style="margin-right: 5px;">
-										<select
-										class="majorCk form-select" name="majorName">
+									<select class="majorCk form-select" name="majorName">
 										<option value="">전공선택</option>
 										<th:block th:each="major:${major}">
-											<option th:text="${major.majorName}"
-												th:value="${major.majorName}"></option>
+											<option th:text="${major.majorName}" th:value="${major.majorName}"></option>
 										</th:block>
 									</select>
 								</div>
 								<div style="margin-right: 5px;">
-								
-										<select class="form-select" name="courseGrade">
+
+									<select class="form-select" name="courseGrade">
 										<option value="">학년선택</option>
 										<option value="1">1학년</option>
 										<option value="2">2학년</option>
@@ -84,8 +75,8 @@
 										<option value="4">4학년</option>
 									</select>
 								</div>
-								<input th:value="${#authentication.principal.username}"
-									type="hidden" id="userid" name="userId">
+								<input th:value="${#authentication.principal.username}" type="hidden" id="userid"
+									name="userId">
 								<div>
 									<button th:text="검색" class="btn btn btn-secondary"></button>
 								</div>
@@ -93,55 +84,47 @@
 						</form>
 						<div class="test">
 							<th:block th:each="geades:${gradesCk}">
-								<h4 style="font-family: 'Nanum Gothic Coding', monospace;" th:text="|나의 총 학점:${geades.courseCredit}점/|" />
-								<h4 style="font-family: 'Nanum Gothic Coding', monospace;" th:text="|선택가능 학점:${18 - geades.courseCredit}점|" />
+								<h4 style="font-family: 'Nanum Gothic Coding', monospace;"
+									th:text="|나의 총 학점:${geades.courseCredit}점/|" />
+								<h4 style="font-family: 'Nanum Gothic Coding', monospace;"
+									th:text="|선택가능 학점:${18 - geades.courseCredit}점|" />
 							</th:block>
 						</div>
 					</div>
-					<div class="table-responsive p-0 overflow-auto"
-						style="height: 500px">
+					<div class="table-responsive p-0 overflow-auto" style="height: 500px">
 						<table class="table align-items-center table table-hover">
 							<thead>
 								<tr>
 
-									<th
-										class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
 										th:text="전공"></th>
-									<th
-										class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
 										th:text="교과목"></th>
-									<th
-										class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
 										th:text="교수"></th>
-									<th
-										class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
 										th:text="이수구분"></th>
-									<th
-										class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
 										th:text="학점"></th>
-									<th
-										class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
 										th:text="학년"></th>
-									<th
-										class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
 										th:text="학기"></th>
-									<th
-										class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
 										th:text="|현재신청인원/정원|"></th>
-									<th
-										class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
 										th:text="시간표"></th>
-									<th
-										class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
 										th:text="강의계획서"></th>
-									<th
-										class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+									</th>
 								</tr>
 							</thead>
 							<tbody style="text-align: center;">
 								<tr th:each="data:${openList}">
 									<td th:text="${data.majorName}"></td>
-									<td th:text="${data.courseTitle}" style="font-weight: 900; font-family: 'Nanum Gothic Coding', monospace;"></td>
+									<td th:text="${data.courseTitle}"
+										style="font-weight: 900; font-family: 'Nanum Gothic Coding', monospace;"></td>
 									<td th:text="${data.userName}"></td>
 									<td th:text="${data.courseType}"></td>
 									<td th:text="|${data.courseCredit}학점|"></td>
@@ -150,39 +133,36 @@
 									<td style="text-align: center;" th:text=|${data.classCk}/${data.classTo}|></td>
 
 									<td>
-										<ul style="list-style: none;" class="p-0"
-											th:each="schCk:${classScheduleCk}"
+										<ul style="list-style: none;" class="p-0" th:each="schCk:${classScheduleCk}"
 											th:if="${data.classId} == ${schCk.classId}">
-											<li style="text-align: center;"><span th:text="${schCk.scheduleTitle}"></span> <span
-												th:text="${schCk.classTimetableName}"></span></li>
+											<li style="text-align: center;"><span
+													th:text="${schCk.scheduleTitle}"></span> <span
+													th:text="${schCk.classTimetableName}"></span></li>
 										</ul>
 									</td>
 
 									<td><i class="fa-solid fa-file"></i><a
-										th:href="${'/download?classSyl='+data.classSyl}"
-										th:text="강의계획서"></a></td>
+											th:href="${'/download?classSyl='+data.classSyl}" th:text="강의계획서"></a></td>
 
 									<th:block th:each="geades:${gradesCk}">
 
 										<th:block th:if="${data.majorName} == ${myMajor.userDept}">
 
-											<th:block
-												th:if="${geades.courseCredit} + ${data.courseCredit} <= 18">
+											<th:block th:if="${geades.courseCredit} + ${data.courseCredit} <= 18">
 
 												<th:block th:if="${data.classCk} < ${data.classTo}">
-													<td><button class="btn btn btn-secondary btn-sm btn1"
-															th:text="신청" th:data-class_id="${data.classId}"
+													<td><button class="btn btn btn-secondary btn-sm btn1" th:text="신청"
+															th:data-class_id="${data.classId}"
 															th:data-grade_test="${data.courseGrade}"></button></td>
 												</th:block>
 
 												<th:block th:if="${data.classCk} >= ${data.classTo}">
-													<td><button class="btn btn btn-secondary btn-sm "
-															th:text="인원완료" disabled='disabled'></button></td>
+													<td><button class="btn btn btn-secondary btn-sm " th:text="인원완료"
+															disabled='disabled'></button></td>
 												</th:block>
 											</th:block>
 
-											<th:block
-												th:if="${geades.courseCredit} + ${data.courseCredit} > 18">
+											<th:block th:if="${geades.courseCredit} + ${data.courseCredit} > 18">
 												<td><button class="btn btn btn-secondary btn-sm btn2"
 														th:text="신청"></button></td>
 											</th:block>
@@ -191,8 +171,8 @@
 
 										<th:block th:if="${data.majorName} != ${myMajor.userDept}">
 
-											<td><button class="btn btn btn-secondary btn-sm btn3"
-													th:text="신청"></button></td>
+											<td><button class="btn btn btn-secondary btn-sm btn3" th:text="신청"></button>
+											</td>
 										</th:block>
 
 									</th:block>
@@ -208,8 +188,7 @@
 		<div class="row justify-content-center">
 			<div class="card p-3 me-3 mt-5 col-10">
 				<div class="card-header p-0 position-relative mt-n4 mb-4 z-index-2">
-					<div
-						class="bg-secondary bg-gradient-secondary shadow-secondary border-radius-lg py-3">
+					<div class="bg-secondary bg-gradient-secondary shadow-secondary border-radius-lg py-3">
 						<h6 class="text-white ps-3 m-0">수강신청 완료</h6>
 					</div>
 				</div>
@@ -219,56 +198,48 @@
 							<thead>
 								<tr>
 
-									<th
-										class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
 										th:text="전공"></th>
-									<th
-										class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
 										th:text="교과목"></th>
-									<th
-										class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
 										th:text="교수"></th>
 
-									<th
-										class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
 										th:text="이수구분"></th>
-									<th
-										class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
 										th:text="학점"></th>
-									<th
-										class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
 										th:text="학기"></th>
-									<th
-										class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
 										th:text="시간표"></th>
-									<th
-										class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
 										th:text="강의계획서"></th>
-									<th
-										class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
+									<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+									</th>
 								</tr>
 							</thead>
 							<tbody style="text-align: center;">
 								<tr th:each="data:${enrolmentlist}">
 									<td th:text="${data.major_name}"></td>
-									<td th:text="${data.course_title}" style="font-weight: 900; font-family: 'Nanum Gothic Coding', monospace;"></td>
+									<td th:text="${data.course_title}"
+										style="font-weight: 900; font-family: 'Nanum Gothic Coding', monospace;"></td>
 									<td th:text="${data.user_name}"></td>
 									<td th:text="${data.course_type}"></td>
 									<td th:text="|${data.course_credit}학점|"></td>
 									<td th:text="|${data.class_sem}학기|"></td>
 									<td>
-										<ul style="list-style: none;"
-											th:each="schCk:${classScheduleCk}"
+										<ul style="list-style: none;" th:each="schCk:${classScheduleCk}"
 											th:if="${data.class_id} == ${schCk.classId}">
-											<li  style="text-align: center;"><span th:text="${schCk.scheduleTitle}"></span> <span
-												th:text="${schCk.classTimetableName}"></span></li>
+											<li style="text-align: center;"><span
+													th:text="${schCk.scheduleTitle}"></span> <span
+													th:text="${schCk.classTimetableName}"></span></li>
 										</ul>
 									</td>
 									<td><i class="fa-solid fa-file"></i><a
-										th:href="${'/download?classSyl='+data.class_syl}"
-										th:text="강의계획서"></a></td>
-									<td><button class="btn btn btn-secondary btn-sm enbtn"
-											th:text="삭제" th:data-en_class_id="${data.class_id}"></button></td>
+											th:href="${'/download?classSyl='+data.class_syl}" th:text="강의계획서"></a></td>
+									<td><button class="btn btn btn-secondary btn-sm enbtn" th:text="삭제"
+											th:data-en_class_id="${data.class_id}"></button></td>
 								</tr>
 							</tbody>
 						</table>
@@ -282,118 +253,118 @@
 	<th:block th:replace="fragments/footer :: footerFragment"></th:block>
 
 	<script th:inline="javascript">
-	
-	
-	
 
-		
-	 var classMemberTime =[];
-	 [# th:each="time:${classMemberTimeCk}"]
-		classMemberTime.push([[${time.classTimetableId}]])
-	 [/]
+
+
+
+
+		var classMemberTime = [];
+		[# th: each = "time:${classMemberTimeCk}"]
+		classMemberTime.push([[${ time.classTimetableId }]])
+		[/]
 
 	
 		$(".btn1").on("click", insert);
-	 
+
 		function insert() {
 			var insert = $(this).data("class_id")
 			var id = $("#userid").val()
 			var grade = $(this).data("grade_test")
-			var studentGrade = [[${mygrade.studentGrade}]]
+			var studentGrade = [[${ mygrade.studentGrade }]]
 			$.ajax({
-				url:"/timeselect",
-				data:{
-					classId : insert
+				url: "/timeselect",
+				data: {
+					classId: insert
 				},
-				success:function(data){
-					
+				success: function (data) {
+
 					var classTime = [];
-					for(var i=0;i<data.length; i++ ){
+					for (var i = 0; i < data.length; i++) {
 						classTime.push(data[i].classTimetableId);
-					}			
-						
-						
-						var timeCk=false;
-						 classMemberTime.forEach(time => {
-							if(classTime.indexOf(time)>=0){
-								timeCk = true;
-							}
-						})
-						
-						
-						if(timeCk){
-							toastr.error("중복된 시간표 선택", "경고")
+					}
+
+
+					var timeCk = false;
+					classMemberTime.forEach(time => {
+						if (classTime.indexOf(time) >= 0) {
+							timeCk = true;
 						}
-						else if(grade != studentGrade ){
-							toastr.error("학년에 맞게 선택하세요", "경고")
-						}
-						else{
-							  $.ajax({
-							url : "/openlectureinsert",
-							type : "post",
-							data : {
-								classId : insert,
-								userId : id
+					})
+
+
+					if (timeCk) {
+						toastr.error("중복된 시간표 선택", "경고")
+					}
+					else if (grade != studentGrade) {
+						toastr.error("학년에 맞게 선택하세요", "경고")
+					}
+					else {
+						$.ajax({
+							url: "/openlectureinsert",
+							type: "post",
+							data: {
+								classId: insert,
+								userId: id
 							},
-							success : function(data) {
+							success: function (data) {
 								toastr.success('신청완료', '성공')
 								setTimeout("location.reload()", 500);
 							},
-							error : function(error) {
+							error: function (error) {
 								toastr.error("신청실패", "경고")
 								return false
 							}
-							
-						});  
-						}
-			
+
+						});
+					}
+
 				}
 			})
-			
-			
+
+
 
 		}
 
-		
+
 		$(".enbtn").on("click", Endelete);
 		//수강신청한 강좌를 삭제하는 부분
 		function Endelete() {
 			let deletes = $(this).data("en_class_id")
 			Kcy.fire({
-				  title: '정말 삭제하시겠습니까?',
-				  text: "삭제하면 다시 수강신청 하셔야합니다",
-				  icon: 'warning',
-				  showCancelButton: true,
-				  confirmButtonText: '삭제',
-				  cancelButtonText: '취소'
-				}).then((result) => {
-				  if (result.isConfirmed) {
-				      $.ajax({
-							url : "/enrolmentdelete",
-							data : {
-								classId : deletes
-							},
-							success : function(data) {
-								 Kcy.fire(
-									    	'삭제완료',
-											'수강신청 과목이 삭제 되었습니다',
-											'success',
-				               )
-				               setTimeout("location.reload()", 800);
-							},
-							error : function(error) {
-								 Kcy.fire(
-									    	'삭제실패',
-											'삭제하는 도중에 오류가 발생하였습니다',
-											'error',
-				               )
-								toastr.error('삭제실패', '경고')
-								return false
-							}
-						})
-				  }
-				})
-			
+				title: '정말 삭제하시겠습니까?',
+				text: "삭제하면 다시 수강신청 하셔야합니다",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonText: '삭제',
+				cancelButtonText: '취소'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					$.ajax({
+						url: "/enrolmentdelete",
+						data: {
+							classId: deletes
+						},
+						success: function (data) {
+							Kcy.fire(
+								'삭제완료',
+								'수강신청 과목이 삭제 되었습니다',
+								'success',
+							)
+							setTimeout("location.reload()", 800);
+						},
+						error: function (error) {
+							Kcy.fire(
+								'삭제실패',
+								'삭제하는 도중에 오류가 발생하였습니다',
+								'error',
+							)
+							toastr.error('삭제실패', '경고')
+							return false
+						}
+					})
+				}
+			})
+
 		}
 
 		$(".btn2").on("click", CreditCk);
@@ -401,7 +372,7 @@
 		function CreditCk() {
 			toastr.error("18학점을 초과", "경고")
 		}
-		
+
 		$(".btn3").on("click", majorCk);
 
 		function majorCk() {
@@ -411,4 +382,5 @@
 	</script>
 	<!-- 본문 end-->
 </th:block>
+
 </html>
